@@ -8,13 +8,13 @@ public class Solution {
 
         System.out.print("신장(m): ");
 
-        float height = scanner.nextFloat();
+        double height = scanner.nextDouble();
 
         System.out.print("체중(kg): ");
 
-        float weight = scanner.nextFloat();
+        double weight = scanner.nextDouble();
 
-        float BMI = weight / (height * height);
+        double BMI = weight / (height * height);
 
         System.out.print("비만도 결과: ");
 
