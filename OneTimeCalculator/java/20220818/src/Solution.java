@@ -8,7 +8,7 @@ public class Solution {
 
         System.out.println("숫자를 입력해 주세요:");
 
-        int number1 = scanner.nextInt();
+        double number1 = scanner.nextDouble();
 
         System.out.println("연산자를 선택해주세요:");
         System.out.println("1. + (더하기)");
@@ -20,28 +20,28 @@ public class Solution {
 
         System.out.println("숫자를 입력해 주세요:");
 
-        int number2 = scanner.nextInt();
+        double number2 = scanner.nextDouble();
 
         if (operatorIndex == 1) {
-            float result = number1 + number2;
+            double result = number1 + number2;
 
             System.out.println("계산 결과: " + result);
         }
 
         if (operatorIndex == 2) {
-            float result = number1 - number2;
+            double result = number1 - number2;
 
             System.out.println("계산 결과: " + result);
         }
 
         if (operatorIndex == 3) {
-            float result = number1 * number2;
+            double result = number1 * number2;
 
             System.out.println("계산 결과: " + result);
         }
 
         if (operatorIndex == 4) {
-            float result = number1 / number2;
+            double result = number1 / number2;
 
             System.out.println("계산 결과: " + result);
         }
