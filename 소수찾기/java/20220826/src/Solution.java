@@ -13,8 +13,7 @@ class Solution {
                 }
 
                 if (primeNumbers[j] > Math.sqrt(i)) {
-                    primeNumbers[answer] = i;
-                    answer += 1;
+                    isPrime = true;
 
                     break;
                 }
