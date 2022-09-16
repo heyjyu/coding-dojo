@@ -1,6 +1,7 @@
 class Solution {
     public int solution(int n) {
-        int answer = 0;
+        int answer = convertTo10(convertTo3reversed(n));
+
         return answer;
     }
 
@@ -18,7 +19,21 @@ class Solution {
             convertedValue += remainder;
         }
 
-        convertedValue += String.valueOf(quotient);
+        if (quotient > 0) {
+            convertedValue += String.valueOf(quotient);
+        }
+
+        return convertedValue;
+    }
+
+    public int convertTo10(String number) {
+        int convertedValue = 0;
+
+        for (int i = 0; i < number.length(); i += 1) {
+            int valueOfPosition = (int) Math.pow(3, number.length() - i - 1);
+            int power = Integer.valueOf(number.substring(i, i + 1));
+            convertedValue += power * valueOfPosition;
+        }
 
         return convertedValue;
     }
