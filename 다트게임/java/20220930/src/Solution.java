@@ -1,5 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 class Solution {
     public int solution(String dartResult) {
@@ -8,141 +10,66 @@ class Solution {
     }
 
     public List<String> splitRound(String string) {
-        String[] characters = string.split("");
-        List<String> results = new ArrayList<>();
+        List<String> rounds = new ArrayList<>();
 
-        String roundResult = "";
+        Pattern pattern = Pattern.compile("[0-9]{1,2}[SDT][*#]?");
 
-        for (int i = 0; i < characters.length; i += 1) {
-            if (roundResult.length() == 0) {
-                roundResult = characters[i];
+        Matcher matcher = pattern.matcher(string);
 
-                continue;
-            }
-
-            if (List.of("S", "D", "T").contains(roundResult.substring(roundResult.length() - 1))) {
-                if (List.of("*", "#").contains(characters[i])) {
-                    roundResult += characters[i];
-                    results.add(roundResult);
-                    roundResult = "";
-
-                    continue;
-                }
-
-                results.add(roundResult);
-                roundResult = characters[i];
-
-                continue;
-            };
-
-            roundResult += characters[i];
+        while(matcher.find()) {
+            rounds.add(matcher.group());
         }
 
-        if (!roundResult.equals("")) {
-            results.add(roundResult);
-        }
-
-        return results;
-    }
-
-    public List<Integer> scores(String string) {
-        List<String> results = splitRound(string);
-        List<Integer> scores = new ArrayList<>();
-
-        for (String result : results) {
-            String score = "";
-            for (int i = 0; i < result.length(); i += 1) {
-                if (List.of("S","D","T").contains(result.substring(i, i + 1))) {
-                    scores.add(Integer.valueOf(score));
-
-                    break;
-                }
-
-                score += result.substring(i, i + 1);
-            }
-        }
-
-        return scores;
-    }
-
-    public List<String> bonuses(String string) {
-        List<String> results = splitRound(string);
-        List<String> bonuses = new ArrayList<>();
-
-        for (String result : results) {
-            for (int i = 0; i < result.length(); i += 1) {
-                if (List.of("S","D","T").contains(result.substring(i, i + 1))) {
-                    bonuses.add(result.substring(i, i + 1));
-
-                    break;
-                }
-            }
-        }
-
-        return bonuses;
-    }
-
-    public List<String> options(String string) {
-        List<String> results = splitRound(string);
-        List<String> options = new ArrayList<>();
-
-        for (String result : results) {
-            String lastCharacter = result.substring(result.length() - 1);
-
-            if (List.of("*", "#").contains(lastCharacter)) {
-                options.add(lastCharacter);
-
-                continue;
-            }
-
-            options.add("");
-        }
-
-        return options;
-    }
-
-    public List<Integer> processBonus(String string) {
-        List<Integer> results = new ArrayList<>();
-
-        for (int i = 0; i < splitRound(string).size(); i += 1) {
-            int powerBy = 1;
-
-            if (bonuses(string).get(i).equals("D")) {
-                powerBy = 2;
-            }
-
-            if (bonuses(string).get(i).equals("T")) {
-                powerBy = 3;
-            }
-
-            results.add((int) Math.pow(scores(string).get(i), powerBy));
-        }
-
-        return results;
+        return rounds;
     }
 
     public int process(String string) {
-        List<Integer> results = processBonus(string);
-        int sum = 0;
+        List<String> results = splitRound(string);
 
-        for (int i = 0; i < splitRound(string).size(); i += 1) {
-            if (options(string).get(i).equals("*")) {
-                results.set(i, results.get(i) * 2);
+        List<Integer> values = new ArrayList<>();
 
-                if (i > 0) {
-                    results.set(i - 1, results.get(i - 1) * 2);
+        for (String result : results) {
+            String[] words = result.split("[SDT]");
+
+            int score = Integer.valueOf(words[0]);
+
+            Pattern pattern = Pattern.compile("[SDT]");
+
+            Matcher matcher = pattern.matcher(result);
+
+            int bonus = 1;
+
+            if (matcher.find()) {
+                if (matcher.group().equals("D")) {
+                    bonus = 2;
+                }
+
+                if (matcher.group().equals("T")) {
+                    bonus = 3;
                 }
             }
 
-            if (options(string).get(i).equals("#")) {
-                results.set(i, results.get(i) * (-1));
+            values.add((int) Math.pow(score, bonus));
+
+            if (words.length == 1) {
+                continue;
+            }
+
+            if (words[1].equals("*")) {
+                int lastIndex = values.size() - 1;
+                values.set(lastIndex, values.get(lastIndex) * 2);
+
+                if (lastIndex > 0) {
+                    values.set(lastIndex - 1, values.get(lastIndex - 1) * 2);
+                }
+            }
+
+            if (words[1].equals("#")) {
+                int lastIndex = values.size() - 1;
+                values.set(lastIndex, -values.get(lastIndex));
             }
         }
 
-        for (Integer result : results) {
-            sum += result;
-        }
-
-        return sum;
+        return values.stream().mapToInt(i -> i).sum();
     }
 }

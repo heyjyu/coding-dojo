@@ -17,38 +17,6 @@ class SolutionTest {
     }
 
     @Test
-    void scores() {
-        Solution solution = new Solution();
-
-        assertEquals(List.of(1, 2, 10), solution.scores("1D2S#10S"));
-        assertEquals(List.of(1, 2, 3), solution.scores("1D2S3T*"));
-    }
-
-    @Test
-    void bonuses() {
-        Solution solution = new Solution();
-
-        assertEquals(List.of("D", "S", "S"), solution.bonuses("1D2S#10S"));
-        assertEquals(List.of("D", "S", "T"), solution.bonuses("1D2S3T*"));
-    }
-
-    @Test
-    void options() {
-        Solution solution = new Solution();
-
-        assertEquals(List.of("*", "*", ""), solution.options("1S*2T*3S"));
-        assertEquals(List.of("", "", "*"), solution.options("1D2S3T*"));
-    }
-
-    @Test
-    void processBonus() {
-        Solution solution = new Solution();
-
-        assertEquals(List.of(1, (int) Math.pow(2, 2), (int) Math.pow(3, 3)), solution.processBonus("1S2D*3T"));
-        assertEquals(List.of((int) Math.pow(1, 2), 2, 10), solution.processBonus("1D2S#10S"));
-    }
-
-    @Test
     void process() {
         Solution solution = new Solution();
 
