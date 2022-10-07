@@ -14,13 +14,12 @@ class SolutionTest {
     }
 
     @Test
-    void row() {
+    void padding() {
         Solution solution = new Solution();
 
         int length = 5;
-        int value = 9;
 
-        assertEquals("01001", solution.row(length, value));
+        assertEquals("01001", solution.addZero(length, "1001"));
     }
 
     @Test

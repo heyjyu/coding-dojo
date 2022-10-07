@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 class Solution {
     public String[] solution(int n, int[] arr1, int[] arr2) {
         String[] answer = map(n, arr1, arr2);
@@ -8,42 +10,12 @@ class Solution {
         return Integer.toBinaryString(number);
     }
 
-    public String row(int length, int value) {
-        String row = "";
-        String base2 = String.valueOf(base2(value));
-
-        int paddingLength = length - base2.length();
-
-        for (int i = 0; i < paddingLength; i += 1) {
-            row = "0" + row;
-        }
-
-        row += base2;
-
-        return row;
-    }
-
     public String processRow(int length, int value1, int value2) {
-        String row1 = row(length, value1);
-        String row2 = row(length, value2);
-
-        String processedRow = "";
-
-        for (int i = 0; i < length; i += 1) {
-            processedRow += Long.valueOf(row1.substring(i, i + 1)) | Long.valueOf(row2.substring(i, i + 1));
-        }
-
-        return processedRow;
+        return addZero(length, Integer.toBinaryString(value1 | value2));
     }
 
     public String toMapRow(String row) {
-        String mapRow = "";
-
-        for (int i = 0; i < row.length(); i += 1) {
-            mapRow += row.charAt(i) == '1' ? "#" : " ";
-        }
-
-        return mapRow;
+        return row.replace("0", " ").replace("1", "#");
     }
 
     public String[] map(int length, int[] array1, int[] array2) {
@@ -54,5 +26,9 @@ class Solution {
         }
 
         return map;
+    }
+
+    public String addZero(int length, String value) {
+        return "0".repeat(length - value.length()) + value;
     }
 }
