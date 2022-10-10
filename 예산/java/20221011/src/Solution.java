@@ -1,4 +1,5 @@
 import java.util.Arrays;
+import java.util.stream.IntStream;
 
 class Solution {
     public int solution(int[] d, int budget) {
@@ -15,15 +16,16 @@ class Solution {
     public int process(int[] array, int budget) {
         int[] sortedArray = sort(array);
 
-        int usedBudget = 0;
+        return IntStream.range(0, sortedArray.length)
+                .map(i -> sumToIndex(sortedArray, i))
+                .filter(sum -> sum <= budget)
+                .toArray()
+                .length;
+    }
 
-        for (int i = 0; i < sortedArray.length; i += 1) {
-            usedBudget += sortedArray[i];
-            if (usedBudget > budget) {
-                return i;
-            }
-        }
-
-        return sortedArray.length;
+    public int sumToIndex(int[] array, int index) {
+        return IntStream.rangeClosed(0, index)
+                .map(i -> array[i])
+                .sum();
     }
 }

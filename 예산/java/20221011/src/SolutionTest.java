@@ -21,4 +21,16 @@ class SolutionTest {
 
         assertEquals(3, solution.process(array, budget));
     }
+
+    @Test
+    void sum() {
+        Solution solution = new Solution();
+
+        int[] array = {1, 3, 2, 5, 4};
+
+        int index = 1;
+
+        assertEquals(1 + 3, solution.sumToIndex(array, index));
+        assertEquals(1 + 3 + 2, solution.sumToIndex(array, 2));
+    }
 }
