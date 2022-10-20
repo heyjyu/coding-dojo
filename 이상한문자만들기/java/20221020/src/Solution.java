@@ -1,3 +1,8 @@
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 class Solution {
     public String solution(String s) {
         String answer = process(s);
@@ -5,25 +10,17 @@ class Solution {
     }
 
     public String process(String string) {
-        String processedString = "";
+        Pattern pattern = Pattern.compile("\\w+");
+        Matcher matcher = pattern.matcher(string.toUpperCase());
 
-        int index = 0;
+        return matcher.replaceAll(x -> lowerCaseAtOddIndex(x.group()));
+    }
 
-        for (int i = 0; i < string.length(); i += 1) {
-            if (string.charAt(i) != 32) {
-                if (index % 2 == 0) {
-                    processedString += string.substring(i, i + 1).toUpperCase();
-                    index += 1;
-                    continue;
-                }
-                processedString += string.substring(i, i + 1).toLowerCase();
-                index += 1;
-                continue;
-            }
-            processedString += string.substring(i, i + 1);
-            index = 0;
-        }
-
-        return processedString;
+    public String lowerCaseAtOddIndex(String string) {
+        return IntStream.range(0, string.length())
+                .mapToObj(i -> i % 2 == 0
+                        ? string.substring(i, i + 1)
+                        : string.substring(i, i + 1).toLowerCase())
+                .collect(Collectors.joining());
     }
 }
