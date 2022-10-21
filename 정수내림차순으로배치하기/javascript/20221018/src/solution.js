@@ -3,7 +3,7 @@ function solution(n) {
   return answer;
 }
 
-function sort(n) {
+export function sort(n) {
   return parseInt(n.toString()
     .split('')
     .sort()
