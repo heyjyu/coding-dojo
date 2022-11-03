@@ -35,19 +35,11 @@ function processedCounts(counts) {
     .filter((i) => counts[i] === 0)
     .reduce((acc, i) => {
       if (acc[i - 1] > 1) {
-        const newCount = acc;
-        newCount[i - 1] = 1;
-        newCount[i] = 1;
-
-        return newCount;
+        return Object.values({ ...acc, [i - 1]: 1, [i]: 1 });
       }
 
       if (acc[i + 1] > 1) {
-        const newCount = acc;
-        newCount[i + 1] = 1;
-        newCount[i] = 1;
-
-        return newCount;
+        return Object.values({ ...acc, [i]: 1, [i + 1]: 1 });
       }
 
       return acc;
