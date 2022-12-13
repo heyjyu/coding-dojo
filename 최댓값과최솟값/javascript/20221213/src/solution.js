@@ -6,7 +6,7 @@ function test() {
 
 function solution(s) {
     test();
-    var answer = '';
+    var answer = minAndMax(s);
     return answer;
 }
 
